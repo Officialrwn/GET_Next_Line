@@ -1,20 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leotran <leotran@student.42.fr>            +#+  +:+       +#+        */
+/*   By: leo <leo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 13:51:02 by leotran           #+#    #+#             */
-/*   Updated: 2021/12/01 16:17:05 by leotran          ###   ########.fr       */
+/*   Updated: 2021/12/02 02:48:45 by leo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
 #include <stdlib.h>
 #include <unistd.h>
-# include <fcntl.h>
-# define BUF_SIZE 5
+#include <fcntl.h>
+
+#define BUFF_SIZE 5
+
+
 int	countcharsbeforenewline(char *str)
 {
 	int i = 0;
@@ -24,11 +28,13 @@ int	countcharsbeforenewline(char *str)
 	return (i);
 }
 
+//int	get_next_line(const int fd, char **line);
+
 int	main(int argc, char **argv)
 {
 	int		fd;
-	char	buf[BUF_SIZE + 1];
-	ft_bzero(buf, BUF_SIZE + 1);
+	char	buf[BUFF_SIZE + 1];
+	ft_bzero(buf, BUFF_SIZE + 1);
 	char arr[4][6];
 	ft_bzero(arr[0], 6);
 	ft_bzero(arr[1], 6);
@@ -48,7 +54,7 @@ int	main(int argc, char **argv)
 	fd = open(argv[1], O_RDONLY);
 	if (fd != -1)
 	{
-		while (read(fd, buf, BUF_SIZE))
+		while (read(fd, buf, BUFF_SIZE))
 		{
 			if (!line)
 			{
