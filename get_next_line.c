@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leo <leo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: leotran <leotran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 13:51:02 by leotran           #+#    #+#             */
-/*   Updated: 2021/12/02 06:44:55 by leo              ###   ########.fr       */
+/*   Updated: 2021/12/02 15:04:01 by leotran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <stdio.h>
 
 #define BUFF_SIZE 8
-static char temp[BUFF_SIZE];
+static char temp[4096];
 
 typedef struct s_nextline
 {
@@ -87,3 +87,15 @@ int	main(int argc, char **argv)
 	}
 	return (0);
 }
+
+getnextfunction(int fd, **line)
+{
+	char *temp = "Hello";
+	*line = temp;
+}
+static char temp[8192];
+read 10 bytes
+
+Hello\n
+Tesa sdasdt\n 
+sadasd\n
