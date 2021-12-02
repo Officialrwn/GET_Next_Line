@@ -6,7 +6,7 @@
 /*   By: leotran <leotran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 13:51:02 by leotran           #+#    #+#             */
-/*   Updated: 2021/12/02 15:04:01 by leotran          ###   ########.fr       */
+/*   Updated: 2021/12/02 18:37:45 by leotran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,8 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-#define BUFF_SIZE 8
-static char temp[4096];
-
-typedef struct s_nextline
-{
-	char *nextline;
-	int i;
-}				t_nextline;
+#define BUFF_SIZE 4
+static char temp[1096]];
 
 int	countnextnl(char *buffer)
 {
@@ -36,66 +30,51 @@ int	countnextnl(char *buffer)
 	return (i);
 }
 
-t_nextline	ft_checknewline(char *src, char *buffer)
+char	*ft_checknewline(char *buffer)
 {
-	int	i;
-	t_nextline var;
-	char *test;
+	char	*nextline;
+	char	*src;
+
+	src = ft_strnew(BUFF_SIZE + 1);
+	ft_strncpy(src, buffer, countnextnl(buffer));
+	nextline = ft_strjoin(temp, src);
+	ft_bzero(temp, 1024);
+	ft_strcpy(temp, ft_strchr(buffer, '\n') + 1);
 	
-	i = 0;
-	if (ft_strchr(buffer, '\n') == 0)
-	{
-		ft_strcpy(src, buffer);
-	}
-	else
-	{
-		ft_strncpy(src, buffer, countnextnl(buffer));
-		var.nextline = ft_strjoin(temp, src);
-		ft_strcpy(temp, ft_strchr(buffer, '\n') + 1);
-	}
-	return (var);
+	return (nextline);
 }
 
 int	get_next_line(const int fd, char **line)
 {
-	char	*src;
 	char	*buffer;
-	t_nextline var;
 
-	src = ft_strnew(BUFF_SIZE);
-	buffer = ft_strnew(BUFF_SIZE);
-
-	if (read(fd, buffer, BUFF_SIZE))
+	buffer = ft_strnew(BUFF_SIZE + 1);
+	while (read(fd, buffer, BUFF_SIZE))
 	{
-		var = ft_checknewline(src, buffer);
-		*line = var.nextline;
+		if (ft_strchr(buffer, '\n') == 0)
+		{
+			ft_strcat(temp, buffer);
+		}
+		else
+		{
+			*line = ft_checknewline(buffer);
+			return (1);
+		}
 	}
-	else
-		return (0);
-	return (1);
+	
+	return (0);
 }
 
 
 int	main(int argc, char **argv)
 {
 	int	fd = open(argv[1], O_RDONLY);
-	char	**line;
+	char	*line;
 
-	while (get_next_line(fd, line))
+	while (get_next_line(fd, &line))
 	{
-		printf("main = %s\n", *line);
+		printf("main = %s ", line);
+		printf("stat = %s\n", temp);
 	}
 	return (0);
 }
-
-getnextfunction(int fd, **line)
-{
-	char *temp = "Hello";
-	*line = temp;
-}
-static char temp[8192];
-read 10 bytes
-
-Hello\n
-Tesa sdasdt\n 
-sadasd\n
