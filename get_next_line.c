@@ -6,75 +6,79 @@
 /*   By: leotran <leotran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 13:51:02 by leotran           #+#    #+#             */
-/*   Updated: 2021/12/02 18:37:45 by leotran          ###   ########.fr       */
+/*   Updated: 2021/12/04 16:27:30 by leotran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <stdio.h>
-
-#define BUFF_SIZE 4
-static char temp[1096]];
+#include "get_next_line.h"
 
 int	countnextnl(char *buffer)
 {
 	int	i;
 
 	i = 0;
-	while (buffer[i] != '\n')
+	while (buffer[i] != NL)
 		i++;
 	return (i);
 }
 
-char	*ft_checknewline(char *buffer)
-{
-	char	*nextline;
-	char	*src;
-
-	src = ft_strnew(BUFF_SIZE + 1);
-	ft_strncpy(src, buffer, countnextnl(buffer));
-	nextline = ft_strjoin(temp, src);
-	ft_bzero(temp, 1024);
-	ft_strcpy(temp, ft_strchr(buffer, '\n') + 1);
-	
-	return (nextline);
-}
-
 int	get_next_line(const int fd, char **line)
 {
-	char	*buffer;
+	char		*buffer;
+	char		*nextline;
+	char		*temp;
+	static char *stathicc[2];
 
-	buffer = ft_strnew(BUFF_SIZE + 1);
-	while (read(fd, buffer, BUFF_SIZE))
+	buffer = ft_strnew(BUFF_SIZE);
+	if (stathicc[0] != NULL && ft_strchr(stathicc[0], NL) != NULL) //if static is not empty && static has NL
 	{
-		if (ft_strchr(buffer, '\n') == 0)
+		nextline = ft_strsub(stathicc[0], 0, countnextnl(stathicc[0])); // nextline = str before NL
+		*line = nextline;
+		if (*(ft_strchr(stathicc[0], NL) + 1) != '\0') // if NL + 1 is not NULLbyte
 		{
-			ft_strcat(temp, buffer);
+			temp = ft_strdup(ft_strchr(stathicc[0], NL) + 1); //cpy leftover from static to temp
+			free(stathicc[0]);
+			stathicc[0] = ft_strdup(temp);
+			free(temp);
+			temp = NULL;
 		}
 		else
 		{
-			*line = ft_checknewline(buffer);
-			return (1);
+			free(stathicc[0]);
+			stathicc[0] = NULL;
 		}
+		return (1);
 	}
-	
-	return (0);
-}
-
-
-int	main(int argc, char **argv)
-{
-	int	fd = open(argv[1], O_RDONLY);
-	char	*line;
-
-	while (get_next_line(fd, &line))
+	else
 	{
-		printf("main = %s ", line);
-		printf("stat = %s\n", temp);
+		while (read(fd, buffer, BUFF_SIZE))
+		{
+			if (ft_strchr(buffer, NL) == NULL) //if buffer has no NL
+			{
+				if (stathicc[0] != NULL)
+				{
+					temp = ft_strdup(stathicc[0]);
+					free(stathicc[0]);
+					stathicc[0] = ft_strjoin(temp, buffer);
+				}
+				else
+					stathicc[0] = ft_strdup(buffer);
+			}
+			else
+			{
+				if (stathicc[0] != NULL) // stat is not empty
+				{
+					temp = ft_strsub(buffer, 0,countnextnl(buffer)); // st1
+					nextline = ft_strjoin(stathicc[0], temp); // nextline = Te + st1
+					free(stathicc[0]);
+				}
+				else
+					nextline = ft_strsub(buffer, 0, countnextnl(buffer)); //cpy str before NL
+				*line = nextline;
+				stathicc[0] = ft_strdup(ft_strchr(buffer, NL) + 1); //cpy leftover to static
+				return (1);
+			}
+		}
 	}
 	return (0);
 }
