@@ -6,13 +6,13 @@
 /*   By: leotran <leotran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 02:43:39 by leo               #+#    #+#             */
-/*   Updated: 2021/12/04 16:46:50 by leotran          ###   ########.fr       */
+/*   Updated: 2021/12/04 17:02:51 by leotran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-# define BUFF_SIZE 5
+# define BUFF_SIZE 8
 # define NL '\n'
 
 # include <stdlib.h>
