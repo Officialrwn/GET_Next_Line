@@ -6,7 +6,7 @@
 /*   By: leotran <leotran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 02:43:39 by leo               #+#    #+#             */
-/*   Updated: 2021/12/04 17:02:51 by leotran          ###   ########.fr       */
+/*   Updated: 2021/12/06 17:00:14 by leotran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
-# include "Libft/libft.h"
+# include "libft/libft.h"
 
 int	get_next_line(const int fd, char **line);
 
