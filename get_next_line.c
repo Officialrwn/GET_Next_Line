@@ -6,7 +6,7 @@
 /*   By: leotran <leotran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 13:51:02 by leotran           #+#    #+#             */
-/*   Updated: 2021/12/04 16:27:30 by leotran          ###   ########.fr       */
+/*   Updated: 2021/12/06 10:50:08 by leotran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,31 +22,39 @@ int	countnextnl(char *buffer)
 	return (i);
 }
 
+char	*ft_cpyfromstatic(int fd, char **stathicc)
+{
+	char	*temp;
+	char	*nextline;
+	
+	nextline = ft_strsub(stathicc[fd], 0, countnextnl(stathicc[fd])); // nextline = str before NL
+	if (*(ft_strchr(stathicc[fd], NL) + 1) != '\0') // if NL + 1 is not NULLbyte
+	{
+		temp = ft_strdup(ft_strchr(stathicc[fd], NL) + 1); //cpy leftover from static to temp
+		free(stathicc[fd]);
+		stathicc[fd] = ft_strdup(temp);
+		free(temp);
+		temp = NULL;
+	}
+	else
+	{
+		free(stathicc[fd]);
+		stathicc[fd] = NULL;
+	}
+	return (nextline);
+}
+
 int	get_next_line(const int fd, char **line)
 {
 	char		*buffer;
 	char		*nextline;
 	char		*temp;
-	static char *stathicc[2];
+	static char *stathicc[4096];
 
 	buffer = ft_strnew(BUFF_SIZE);
-	if (stathicc[0] != NULL && ft_strchr(stathicc[0], NL) != NULL) //if static is not empty && static has NL
+	if (stathicc[fd] != NULL && ft_strchr(stathicc[fd], NL) != NULL) //if static is not empty && static has NL
 	{
-		nextline = ft_strsub(stathicc[0], 0, countnextnl(stathicc[0])); // nextline = str before NL
-		*line = nextline;
-		if (*(ft_strchr(stathicc[0], NL) + 1) != '\0') // if NL + 1 is not NULLbyte
-		{
-			temp = ft_strdup(ft_strchr(stathicc[0], NL) + 1); //cpy leftover from static to temp
-			free(stathicc[0]);
-			stathicc[0] = ft_strdup(temp);
-			free(temp);
-			temp = NULL;
-		}
-		else
-		{
-			free(stathicc[0]);
-			stathicc[0] = NULL;
-		}
+		*line = ft_cpyfromstatic(fd, stathicc);
 		return (1);
 	}
 	else
@@ -55,27 +63,27 @@ int	get_next_line(const int fd, char **line)
 		{
 			if (ft_strchr(buffer, NL) == NULL) //if buffer has no NL
 			{
-				if (stathicc[0] != NULL)
+				if (stathicc[fd] != NULL)
 				{
-					temp = ft_strdup(stathicc[0]);
-					free(stathicc[0]);
-					stathicc[0] = ft_strjoin(temp, buffer);
+					temp = ft_strdup(stathicc[fd]);
+					free(stathicc[fd]);
+					stathicc[fd] = ft_strjoin(temp, buffer);
 				}
 				else
-					stathicc[0] = ft_strdup(buffer);
+					stathicc[fd] = ft_strdup(buffer);
 			}
 			else
 			{
-				if (stathicc[0] != NULL) // stat is not empty
+				if (stathicc[fd] != NULL) // stat is not empty
 				{
 					temp = ft_strsub(buffer, 0,countnextnl(buffer)); // st1
-					nextline = ft_strjoin(stathicc[0], temp); // nextline = Te + st1
-					free(stathicc[0]);
+					nextline = ft_strjoin(stathicc[fd], temp); // nextline = Te + st1
+					free(stathicc[fd]);
 				}
 				else
 					nextline = ft_strsub(buffer, 0, countnextnl(buffer)); //cpy str before NL
 				*line = nextline;
-				stathicc[0] = ft_strdup(ft_strchr(buffer, NL) + 1); //cpy leftover to static
+				stathicc[fd] = ft_strdup(ft_strchr(buffer, NL) + 1); //cpy leftover to static
 				return (1);
 			}
 		}
