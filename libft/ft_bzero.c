@@ -6,7 +6,7 @@
 /*   By: leotran <leotran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 10:23:23 by leotran           #+#    #+#             */
-/*   Updated: 2021/11/24 09:19:34 by leotran          ###   ########.fr       */
+/*   Updated: 2021/12/08 16:18:39 by leotran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_bzero(void *s, size_t n)
 	unsigned int	i;
 
 	i = 0;
-	while ( i < n)
+	while (i < n)
 	{
 		((char *)s)[i] = '\0';
 		i++;

@@ -6,7 +6,7 @@
 /*   By: leotran <leotran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 08:59:13 by leo               #+#    #+#             */
-/*   Updated: 2021/12/08 15:41:33 by leotran          ###   ########.fr       */
+/*   Updated: 2021/12/08 15:53:33 by leotran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	cpytostatic(int fd, char **stathicc, char *buffer, char **line)
 	}
 	else
 		stathicc[fd] = ft_strdup(buffer);
-	ft_bzero(buffer, ft_strlen(buffer));
+	ft_strdel(&buffer);
 	if (ft_strchr(stathicc[fd], NL) != NULL)
 	{
 		*line = ft_strccpy(stathicc[fd], NL);
@@ -63,20 +63,19 @@ static int	cpytostatic(int fd, char **stathicc, char *buffer, char **line)
 static int	readfile(int fd, char **stathicc, char **line)
 {
 	char	*buffer;
-	char	*temp;
 	int		i;
 
 	buffer = ft_strnew(BUFF_SIZE);
 	i = read(fd, buffer, BUFF_SIZE);
 	if (i == -1)
+	{
+		ft_strdel(&buffer);
 		return (-1);
+	}
 	if (i == 0 && stathicc[fd] != NULL)
 		return (getlastline(fd, stathicc, buffer, line));
 	if (i == 0 && stathicc[fd] == NULL)
-	{
 		ft_strdel(line);
-		return (0);
-	}
 	if (i > 0)
 		return (cpytostatic(fd, stathicc, buffer, line));
 	return (0);
@@ -88,7 +87,7 @@ int	get_next_line(const int fd, char **line)
 	int			i;
 
 	i = 1;
-	if (fd < 0 || line == NULL || fd > 8192)
+	if (fd < 0 || line == NULL || fd > 8191)
 		return (-1);
 	while (i > 0)
 	{
