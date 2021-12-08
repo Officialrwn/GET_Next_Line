@@ -1,14 +1,45 @@
+*static[8196];
+i = 1;
 if fd < 0 or line is NULL
 	return -1
 
-i = read ()
-
-if read = -1
-	return -1
-while (i > 0) // read until end of line
-
-if buffer is not empty and has no newline then 
-	strjoin static + buffer // or cpytostatic
-else
+while (i > 0)
+	i = readfunction();
+	if (i == 2)
+		return (1);
 	
 
+int	readfunction
+{
+	int i;
+	
+	i = read ()
+
+	if read = -1
+		return -1
+	if read = 0 && static is not empty
+		if check static has newline 
+			> return static(2) before newline, cpy leftover to temp, strdel static, cpyleftover back to static
+		else
+			return static(2) strdel static strdel buffer
+	
+	if (read > 0) // while read returns 1 / until end of line
+		if static is not NULL       			// strjoin static + buffer
+			temp = strdup(static)
+		 	strdel static
+			static = strjoin(temp, buffer);
+			strdel temp
+		else
+			static = strdup(buffer)				// cpy buffer to static
+		bzero buffer;
+		if static has new line
+			line = strsub(static, 0, until NL)
+			cpy leftover from static > temp
+			strdel static
+			cpy temp > static
+			strdel temp
+			return 2
+		else
+			call return 1 / readfunction?
+	return 0;
+}
