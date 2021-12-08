@@ -6,7 +6,7 @@
 /*   By: leotran <leotran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 08:59:13 by leo               #+#    #+#             */
-/*   Updated: 2021/12/08 14:18:00 by leotran          ###   ########.fr       */
+/*   Updated: 2021/12/08 15:41:33 by leotran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static int	getlastline(int fd, char **stathicc, char *buffer, char **line)
 		ft_strdel(&stathicc[fd]);
 		stathicc[fd] = ft_strdup(temp);
 		ft_strdel(&temp);
+		return (2);
 	}
 	else
 	{
@@ -30,7 +31,6 @@ static int	getlastline(int fd, char **stathicc, char *buffer, char **line)
 		ft_strdel(&stathicc[fd]);
 	}
 	ft_strdel(&buffer);
-		
 	return (0);
 }
 
@@ -73,7 +73,10 @@ static int	readfile(int fd, char **stathicc, char **line)
 	if (i == 0 && stathicc[fd] != NULL)
 		return (getlastline(fd, stathicc, buffer, line));
 	if (i == 0 && stathicc[fd] == NULL)
+	{
 		ft_strdel(line);
+		return (0);
+	}
 	if (i > 0)
 		return (cpytostatic(fd, stathicc, buffer, line));
 	return (0);
@@ -85,7 +88,7 @@ int	get_next_line(const int fd, char **line)
 	int			i;
 
 	i = 1;
-	if (fd < 0 || line == NULL)
+	if (fd < 0 || line == NULL || fd > 8192)
 		return (-1);
 	while (i > 0)
 	{
