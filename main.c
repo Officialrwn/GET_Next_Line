@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leotran <leotran@student.42.fr>            +#+  +:+       +#+        */
+/*   By: leo <leo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 20:02:42 by marvin            #+#    #+#             */
-/*   Updated: 2021/12/07 13:38:52 by leotran          ###   ########.fr       */
+/*   Updated: 2021/12/08 09:42:30 by leo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	main(int argc, char **argv)
 	int fd2 = open(argv[1], O_RDONLY);
 	int fd3 = open("42.txt", O_RDONLY);
 
-	//get_next_line(42, ((void *)0));
-	//get_next_line(42, &line);
+	//printf("%d", get_next_line(42, ((void *)0)));
+	//printf("%d", get_next_line(42, &line));
 	
 	/*
 	get_next_line(fd, &line);
@@ -29,11 +29,8 @@ int	main(int argc, char **argv)
 	get_next_line(fd, &line);
 	get_next_line(fd, &line); */
 
-	
-	while (get_next_line(fd, &line) == 1)
-	{
-		printf("%s\n", line);
-	}
+	printf("%d", get_next_line(fd, &line));
+
 
 
 
