@@ -6,7 +6,7 @@
 /*   By: leotran <leotran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 08:59:13 by leo               #+#    #+#             */
-/*   Updated: 2021/12/08 15:53:33 by leotran          ###   ########.fr       */
+/*   Updated: 2021/12/09 15:18:44 by leotran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,17 @@ static int	getlastline(int fd, char **stathicc, char *buffer, char **line)
 		ft_strdel(&stathicc[fd]);
 		stathicc[fd] = ft_strdup(temp);
 		ft_strdel(&temp);
-		return (2);
 	}
 	else
 	{
 		*line = ft_strdup(stathicc[fd]);
 		ft_strdel(&stathicc[fd]);
+		if (ft_strlen(*line) > 0)
+			return (2);
+		return (0);
 	}
 	ft_strdel(&buffer);
-	return (0);
+	return (2);
 }
 
 static int	cpytostatic(int fd, char **stathicc, char *buffer, char **line)
@@ -67,6 +69,12 @@ static int	readfile(int fd, char **stathicc, char **line)
 
 	buffer = ft_strnew(BUFF_SIZE);
 	i = read(fd, buffer, BUFF_SIZE);
+	if (i == 0 && stathicc[fd] == NULL)
+	{
+		ft_strdel(&buffer);
+		ft_strdel(line);
+		return (0);
+	}
 	if (i == -1)
 	{
 		ft_strdel(&buffer);
@@ -74,11 +82,9 @@ static int	readfile(int fd, char **stathicc, char **line)
 	}
 	if (i == 0 && stathicc[fd] != NULL)
 		return (getlastline(fd, stathicc, buffer, line));
-	if (i == 0 && stathicc[fd] == NULL)
-		ft_strdel(line);
 	if (i > 0)
 		return (cpytostatic(fd, stathicc, buffer, line));
-	return (0);
+	return (i);
 }
 
 int	get_next_line(const int fd, char **line)
