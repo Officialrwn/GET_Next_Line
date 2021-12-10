@@ -1,3 +1,6 @@
+Check why mine returns NULL in line when empty file is passed
+
+
 *static[8196];
 i = 1;
 if fd < 0 or line is NULL

@@ -6,7 +6,7 @@
 /*   By: leotran <leotran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 08:59:13 by leo               #+#    #+#             */
-/*   Updated: 2021/12/09 15:18:44 by leotran          ###   ########.fr       */
+/*   Updated: 2021/12/10 16:25:38 by leotran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,11 @@ static int	readfile(int fd, char **stathicc, char **line)
 
 int	get_next_line(const int fd, char **line)
 {
-	static char	*stathicc[8192];
+	static char	*stathicc[4096];
 	int			i;
 
 	i = 1;
-	if (fd < 0 || line == NULL || fd > 8191)
+	if (fd < 0 || line == NULL)
 		return (-1);
 	while (i > 0)
 	{
