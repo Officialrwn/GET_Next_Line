@@ -6,7 +6,7 @@
 /*   By: leotran <leotran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 20:02:42 by marvin            #+#    #+#             */
-/*   Updated: 2021/12/10 16:25:18 by leotran          ###   ########.fr       */
+/*   Updated: 2021/12/11 14:02:59 by leotran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(int argc, char **argv)
 	get_next_line(fd, &line);
 	get_next_line(fd, &line); */
 	int i = 0;
-	while (i < 2)
+	while (i < 241)
 	{
 		fd = open("test.txt", O_RDONLY);
 		printf("%d %s\n", get_next_line(fd, &line), line);

@@ -6,13 +6,13 @@
 /*   By: leotran <leotran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 08:59:13 by leo               #+#    #+#             */
-/*   Updated: 2021/12/10 16:25:38 by leotran          ###   ########.fr       */
+/*   Updated: 2021/12/11 14:13:34 by leotran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static int	getlastline(int fd, char **stathicc, char *buffer, char **line)
+static int	getlastline(int fd, char **stathicc, char **line)
 {
 	char	*temp;
 
@@ -32,7 +32,6 @@ static int	getlastline(int fd, char **stathicc, char *buffer, char **line)
 			return (2);
 		return (0);
 	}
-	ft_strdel(&buffer);
 	return (2);
 }
 
@@ -49,7 +48,6 @@ static int	cpytostatic(int fd, char **stathicc, char *buffer, char **line)
 	}
 	else
 		stathicc[fd] = ft_strdup(buffer);
-	ft_strdel(&buffer);
 	if (ft_strchr(stathicc[fd], NL) != NULL)
 	{
 		*line = ft_strccpy(stathicc[fd], NL);
@@ -64,24 +62,20 @@ static int	cpytostatic(int fd, char **stathicc, char *buffer, char **line)
 
 static int	readfile(int fd, char **stathicc, char **line)
 {
-	char	*buffer;
+	char	buffer[BUFF_SIZE + 1];
 	int		i;
 
-	buffer = ft_strnew(BUFF_SIZE);
 	i = read(fd, buffer, BUFF_SIZE);
+	buffer[i] = '\0';
 	if (i == 0 && stathicc[fd] == NULL)
 	{
-		ft_strdel(&buffer);
 		ft_strdel(line);
 		return (0);
 	}
 	if (i == -1)
-	{
-		ft_strdel(&buffer);
 		return (-1);
-	}
 	if (i == 0 && stathicc[fd] != NULL)
-		return (getlastline(fd, stathicc, buffer, line));
+		return (getlastline(fd, stathicc, line));
 	if (i > 0)
 		return (cpytostatic(fd, stathicc, buffer, line));
 	return (i);
@@ -89,7 +83,7 @@ static int	readfile(int fd, char **stathicc, char **line)
 
 int	get_next_line(const int fd, char **line)
 {
-	static char	*stathicc[4096];
+	static char	*stathicc[FD_SIZE];
 	int			i;
 
 	i = 1;
