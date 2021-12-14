@@ -6,7 +6,7 @@
 /*   By: leotran <leotran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 08:59:13 by leo               #+#    #+#             */
-/*   Updated: 2021/12/11 17:22:14 by leotran          ###   ########.fr       */
+/*   Updated: 2021/12/14 11:41:29 by leotran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,20 +58,24 @@ static int	cpytostatic(int fd, char **stathicc, char *buffer, char **line)
 		stathicc[fd] = ft_strdup(buffer);
 	if (ft_strchr(stathicc[fd], NL) != NULL)
 		i = getlinefromstatic(fd, stathicc, line);
+	ft_strdel(&buffer);
 	return (i);
 }
 
 static int	readfile(int fd, char **stathicc, char **line)
 {
-	char	buffer[BUFF_SIZE + 1];
+	char	*buffer;
 	int		i;
 
+	buffer = (char *)malloc(sizeof(char) * BUFF_SIZE + 1);
 	i = read(fd, buffer, BUFF_SIZE);
 	buffer[i] = '\0';
 	if (i > 0)
 		i = cpytostatic(fd, stathicc, buffer, line);
 	if (i == 0 && stathicc[fd] != NULL)
 		i = getlastline(fd, stathicc, line);
+	if (i == 0 && stathicc[fd] == NULL)
+		ft_strdel(line);
 	return (i);
 }
 
