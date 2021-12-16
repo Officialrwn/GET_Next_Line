@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leotran <leotran@student.42.fr>            +#+  +:+       +#+        */
+/*   By: leo <leo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 20:02:42 by marvin            #+#    #+#             */
-/*   Updated: 2021/12/16 12:37:25 by leotran          ###   ########.fr       */
+/*   Updated: 2021/12/17 01:11:06 by leo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,8 @@ int	main(void)
 	ft_strdel(&line);
 	printf("%d %s\n", get_next_line(fd, &line), line);
 
-
 	system("leaks a.out");
-	sleep(5);
+	//sleep(5);
 	/*
 	get_next_line(fd, &line);
 	get_next_line(fd, &line);

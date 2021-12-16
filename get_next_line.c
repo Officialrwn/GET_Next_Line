@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leotran <leotran@student.42.fr>            +#+  +:+       +#+        */
+/*   By: leo <leo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 08:59:13 by leo               #+#    #+#             */
-/*   Updated: 2021/12/16 12:39:57 by leotran          ###   ########.fr       */
+/*   Updated: 2021/12/17 01:46:02 by leo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,33 +61,26 @@ static int	cpytostatic(int fd, char **stathicc, char *buffer, char **line)
 	return (i);
 }
 
-static int	readfile(int fd, char **stathicc, char **line)
-{
-	char	*buffer;
-	int		i;
-
-	buffer = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1));
-	i = read(fd, buffer, BUFF_SIZE);
-	buffer[i] = '\0';
-	if (i > 0)
-		i = cpytostatic(fd, stathicc, buffer, line);
-	if (i == 0 && stathicc[fd] != NULL)
-		i = getlastline(fd, stathicc, line);
-	ft_strdel(&buffer);
-	return (i);
-}
-
 int	get_next_line(const int fd, char **line)
 {
 	static char	*stathicc[FD_SIZE];
+	char		*buffer;
 	int			i;
 
 	i = 1;
+	*line = NULL;
+	buffer = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1));
 	if (fd < 0 || line == NULL)
 		i = -1;
 	while (i > 0)
 	{
-		i = readfile(fd, stathicc, line);
+		i = read(fd, buffer, BUFF_SIZE);
+		buffer[i] = '\0';
+		if (i > 0)
+			i = cpytostatic(fd, stathicc, buffer, line);
+		if (i == 0 && stathicc[fd] != NULL)
+			i = getlastline(fd, stathicc, line);
+		ft_strdel(&buffer);
 		if (i == 1)
 			break ;
 	}
