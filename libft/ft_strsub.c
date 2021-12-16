@@ -6,7 +6,7 @@
 /*   By: leotran <leotran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 13:46:34 by leotran           #+#    #+#             */
-/*   Updated: 2021/11/22 15:23:58 by leotran          ###   ########.fr       */
+/*   Updated: 2021/12/15 11:06:41 by leotran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ char	*ft_strsub(const char *s, unsigned int start, size_t len)
 	char	*arr;
 
 	i = 0;
-	arr = ft_strnew(len);
+	arr = (char *)malloc(sizeof(char) * (len + 1));
 	if (!arr || s == NULL)
 		return (NULL);
+	arr[len] = '\0';
 	while (len--)
 	{
 		arr[i] = s[start];
