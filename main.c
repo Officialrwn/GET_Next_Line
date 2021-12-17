@@ -6,7 +6,7 @@
 /*   By: leo <leo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 20:02:42 by marvin            #+#    #+#             */
-/*   Updated: 2021/12/17 02:19:33 by leo              ###   ########.fr       */
+/*   Updated: 2021/12/17 02:45:58 by leo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 int	main(void)
 {
 	int	fd = open("test.txt", O_RDONLY);
-	char	*line; // = NULL;
+	char	*line = NULL;
 	//int fd2 = open("test2.txt", O_RDONLY);
 	//int fd3 = open("text3.txt", O_RDONLY);
 

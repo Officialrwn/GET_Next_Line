@@ -6,7 +6,7 @@
 /*   By: leo <leo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 08:59:13 by leo               #+#    #+#             */
-/*   Updated: 2021/12/17 02:21:56 by leo              ###   ########.fr       */
+/*   Updated: 2021/12/17 02:44:53 by leo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ int	get_next_line(const int fd, char **line)
 	int			i;
 
 	i = 1;
-	*line = NULL;
 	buffer = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1));
 	if (fd < 0 || line == NULL || BUFF_SIZE <= 0 || fd >= FD_SIZE)
 		i = -1;
