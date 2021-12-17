@@ -2,3 +2,4 @@ a.out
 *.o
 get_next_line.h.gch
 libft.a
+a.out.dSYM/

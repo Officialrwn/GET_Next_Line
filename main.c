@@ -6,7 +6,7 @@
 /*   By: leo <leo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 20:02:42 by marvin            #+#    #+#             */
-/*   Updated: 2021/12/17 01:11:06 by leo              ###   ########.fr       */
+/*   Updated: 2021/12/17 02:19:33 by leo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ int	main(void)
 	printf("%d %s\n", get_next_line(fd, &line), line);
 	ft_strdel(&line);
 	printf("%d %s\n", get_next_line(fd, &line), line);
+
+	//char *str = "Hello\nWorld";
+	//printf("%lu", ft_strlen(str)-ft_strlen(ft_strchr(str, '\n')));
 
 	system("leaks a.out");
 	//sleep(5);

@@ -6,7 +6,7 @@
 /*   By: leo <leo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 08:59:13 by leo               #+#    #+#             */
-/*   Updated: 2021/12/17 01:46:02 by leo              ###   ########.fr       */
+/*   Updated: 2021/12/17 02:21:56 by leo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 static int	getlinefromstatic(int fd, char **stathicc, char **line)
 {
 	char	*temp;
+	size_t	i;
 
-	*line = ft_strccpy(stathicc[fd], NL);
+	i = ft_strlen(stathicc[fd]) - ft_strlen(ft_strchr(stathicc[fd], NL));
+	*line = ft_strsub(stathicc[fd], 0, i);
 	temp = ft_strdup(ft_strchr(stathicc[fd], NL) + 1);
 	ft_strdel(&stathicc[fd]);
 	stathicc[fd] = ft_strdup(temp);
@@ -70,7 +72,7 @@ int	get_next_line(const int fd, char **line)
 	i = 1;
 	*line = NULL;
 	buffer = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1));
-	if (fd < 0 || line == NULL)
+	if (fd < 0 || line == NULL || BUFF_SIZE <= 0 || fd >= FD_SIZE)
 		i = -1;
 	while (i > 0)
 	{
@@ -80,9 +82,9 @@ int	get_next_line(const int fd, char **line)
 			i = cpytostatic(fd, stathicc, buffer, line);
 		if (i == 0 && stathicc[fd] != NULL)
 			i = getlastline(fd, stathicc, line);
-		ft_strdel(&buffer);
 		if (i == 1)
 			break ;
 	}
+	ft_strdel(&buffer);
 	return (i);
 }
