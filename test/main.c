@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   errormain.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leo <leo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: leotran <leotran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 20:02:42 by marvin            #+#    #+#             */
-/*   Updated: 2021/12/17 02:45:58 by leo              ###   ########.fr       */
+/*   Updated: 2021/12/17 12:56:15 by leotran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,8 @@
 
 int	main(void)
 {
-	int	fd = open("test.txt", O_RDONLY);
+	int	fd = 1;
 	char	*line = NULL;
-	//int fd2 = open("test2.txt", O_RDONLY);
-	//int fd3 = open("text3.txt", O_RDONLY);
-
-	//printf("%d", get_next_line(42, ((void *)0)));
-	//printf("%d", get_next_line(42, &line));
 	
 
 	printf("%d %s\n", get_next_line(fd, &line), line);
@@ -32,33 +27,6 @@ int	main(void)
 	printf("%d %s\n", get_next_line(fd, &line), line);
 	ft_strdel(&line);
 	printf("%d %s\n", get_next_line(fd, &line), line);
-
-	//char *str = "Hello\nWorld";
-	//printf("%lu", ft_strlen(str)-ft_strlen(ft_strchr(str, '\n')));
-
-	system("leaks a.out");
-	//sleep(5);
-	/*
-	get_next_line(fd, &line);
-	get_next_line(fd, &line);
-	get_next_line(fd, &line);
-	get_next_line(fd, &line); */
-	//int i = 0;
-	/*while (i < 5)
-	{
-		fd = open("test.txt", O_RDONLY);
-		printf("%d %s\n", get_next_line(fd, &line), line);
-		i++;
-	}*/
-	/*
-	printf("%d ", get_next_line(fd, &line));
-	printf("%d ", get_next_line(fd, &line));
-	printf("%s\n", line);
-	printf("%d ", get_next_line(fd, &line));
-	printf("%s\n", line);*/
-
-
-
 
 	return (0);
 }

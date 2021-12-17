@@ -1,0 +1,6 @@
+1 static
+handles 10mkb
+handles max FD size on Macos
+Reuse of libft
+Only 4 functions
+Easy readability
