@@ -3,86 +3,81 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leotran <leotran@student.42.fr>            +#+  +:+       +#+        */
+/*   By: leo <leo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 08:59:13 by leo               #+#    #+#             */
-/*   Updated: 2021/12/17 13:20:38 by leotran          ###   ########.fr       */
+/*   Updated: 2021/12/18 14:36:52 by leo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static int	getlinefromstatic(int fd, char **stathicc, char **line)
-{
-	char	*temp;
-	size_t	i;
-
-	i = ft_strlen(stathicc[fd]) - ft_strlen(ft_strchr(stathicc[fd], NL));
-	*line = ft_strsub(stathicc[fd], 0, i);
-	temp = ft_strdup(ft_strchr(stathicc[fd], NL) + 1);
-	ft_strdel(&stathicc[fd]);
-	stathicc[fd] = ft_strdup(temp);
-	ft_strdel(&temp);
-	return (1);
-}
-
-static int	getlastline(int fd, char **stathicc, char **line)
-{
-	int	i;
-
-	i = 0;
-	if (ft_strchr(stathicc[fd], NL) != NULL)
-		i = getlinefromstatic(fd, stathicc, line);
-	else
-	{
-		*line = ft_strdup(stathicc[fd]);
-		ft_strdel(&stathicc[fd]);
-		if (*line[0] != '\0')
-			i = 1;
-	}
-	return (i);
-}
-
-static int	cpytostatic(int fd, char **stathicc, char *buffer, char **line)
+static int	getlinefromstatic(int fd, char **stat_str, char **line)
 {
 	char	*temp;
 	int		i;
 
-	i = 2;
-	if (stathicc[fd] != NULL)
+	i = 0;
+	while (stat_str[fd][i] != NL)
+		i++;
+	*line = ft_strsub(stat_str[fd], 0, i);
+	temp = ft_strdup(ft_strchr(stat_str[fd], NL) + 1);
+	ft_strdel(&stat_str[fd]);
+	stat_str[fd] = ft_strdup(temp);
+	ft_strdel(&temp);
+	return (1);
+}
+
+static int	getlastline(int fd, char **stat_str, char **line)
+{
+	int	i;
+
+	i = 0;
+	*line = ft_strdup(stat_str[fd]);
+	ft_strdel(&stat_str[fd]);
+	if (*line[0] != '\0')
+		i = 1;
+	return (i);
+}
+
+static void	cpytostatic(int fd, char **stat_str, char *buffer, char **line)
+{
+	char	*temp;
+
+	if (stat_str[fd] != NULL)
 	{
-		temp = ft_strdup(stathicc[fd]);
-		ft_strdel(&stathicc[fd]);
-		stathicc[fd] = ft_strjoin(temp, buffer);
+		temp = ft_strdup(stat_str[fd]);
+		ft_strdel(&stat_str[fd]);
+		stat_str[fd] = ft_strjoin(temp, buffer);
 		ft_strdel(&temp);
 	}
 	else
-		stathicc[fd] = ft_strdup(buffer);
-	if (ft_strchr(stathicc[fd], NL) != NULL)
-		i = getlinefromstatic(fd, stathicc, line);
-	return (i);
+		stat_str[fd] = ft_strdup(buffer);
 }
 
 int	get_next_line(const int fd, char **line)
 {
-	static char	*stathicc[FD_SIZE];
+	static char	*stat_str[FD_SIZE];
 	char		*buffer;
 	int			i;
 
-	i = 1;
+	i = 2;
 	buffer = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1));
 	if (fd < 0 || line == NULL || BUFF_SIZE <= 0 || fd >= FD_SIZE)
 		i = -1;
-	while (i > 0)
+	while (i >= 0)
 	{
-		i = read(fd, buffer, BUFF_SIZE);
-		buffer[i] = '\0';
-		if (i > 0)
-			i = cpytostatic(fd, stathicc, buffer, line);
-		if (i == 0 && stathicc[fd] != NULL)
-			i = getlastline(fd, stathicc, line);
-		if (i == 1)
+		if (stat_str[fd] != NULL && ft_strchr(stat_str[fd], NL) != NULL)
+			i = getlinefromstatic(fd, stat_str, line);
+		if (i == 0 && stat_str[fd] != NULL)
+			i = getlastline(fd, stat_str, line);
+		if (i == 1 || i == 0)
 			break ;
+		i = read(fd, buffer, BUFF_SIZE);
+		if (i >= 0)
+			buffer[i] = '\0';
+		if (i > 0)
+			cpytostatic(fd, stat_str, buffer, line);
 	}
 	ft_strdel(&buffer);
 	return (i);
