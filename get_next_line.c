@@ -6,7 +6,7 @@
 /*   By: leo <leo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 08:59:13 by leo               #+#    #+#             */
-/*   Updated: 2021/12/19 12:55:08 by leo              ###   ########.fr       */
+/*   Updated: 2021/12/19 12:59:38 by leo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,10 @@ static int	getlastline(int fd, char **stat_str, char **line)
 	int	i;
 
 	i = 0;
-	if (ft_strchr(stat_str[fd], '\n') != NULL)
-		i = getlinefromstatic(fd, stat_str, line);
-	else
-	{
-		*line = ft_strdup(stat_str[fd]);
-		ft_strdel(&stat_str[fd]);
-		if (*line[0] != '\0')
-			i = 1;
-	}
+	*line = ft_strdup(stat_str[fd]);
+	ft_strdel(&stat_str[fd]);
+	if (*line[0] != '\0')
+		i = 1;
 	return (i);
 }
 
