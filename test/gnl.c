@@ -6,11 +6,40 @@
 /*   By: leo <leo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 08:59:13 by leo               #+#    #+#             */
-/*   Updated: 2021/12/18 14:36:52 by leo              ###   ########.fr       */
+/*   Updated: 2021/12/19 00:32:45 by leo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+static int	getline(int i, int fd, char **stat_str, char **line)
+{
+	char	*temp;
+	int		len;
+
+	len = 0;
+	if (ft_strchr(stat_str[fd], NL) != NULL)
+	{
+		while (stat_str[fd][len] != NL)
+			len++;
+		*line = ft_strsub(stat_str[fd], 0, len);
+		temp = ft_strdup(ft_strchr(stat_str[fd], NL) + 1);
+		ft_strdel(&stat_str[fd]);
+		stat_str[fd] = ft_strdup(temp);
+		ft_strdel(&temp);
+		i = 1;
+	}
+	if (i == 0)
+	{
+		*line = ft_strdup(stat_str[fd]);
+		ft_strdel(&stat_str[fd]);
+		if (*line[0] != '\0')
+			bytes_read = 1;
+		else
+			bytes_read = 0;
+	}
+	return (bytes_read);
+}
 
 static int	getlinefromstatic(int fd, char **stat_str, char **line)
 {
@@ -67,6 +96,9 @@ int	get_next_line(const int fd, char **line)
 		i = -1;
 	while (i >= 0)
 	{
+		//if (stat_str[fd] != NULL)
+		//	i = getline(i, fd, stat_str, line);
+		
 		if (stat_str[fd] != NULL && ft_strchr(stat_str[fd], NL) != NULL)
 			i = getlinefromstatic(fd, stat_str, line);
 		if (i == 0 && stat_str[fd] != NULL)

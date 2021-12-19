@@ -6,7 +6,7 @@
 /*   By: leo <leo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 08:59:13 by leo               #+#    #+#             */
-/*   Updated: 2021/12/19 12:10:34 by leo              ###   ########.fr       */
+/*   Updated: 2021/12/19 12:55:08 by leo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ int	get_next_line(const int fd, char **line)
 	buffer = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1));
 	if (fd < 0 || line == NULL || BUFF_SIZE <= 0 || fd >= FD_SIZE)
 		i = -1;
-	while (i >= 0)
+	while (i > 0)
 	{
 		if (stat_str[fd] != NULL && ft_strchr(stat_str[fd], '\n') != NULL)
 			i = getlinefromstatic(fd, stat_str, line);
-		if (i == 1 || i == 0)
+		if (i == 1)
 			break ;
 		bytes_read = read(fd, buffer, BUFF_SIZE);
 		if (bytes_read >= 0)
