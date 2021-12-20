@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leo <leo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: leotran <leotran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 20:02:42 by marvin            #+#    #+#             */
-/*   Updated: 2021/12/19 11:55:42 by leo              ###   ########.fr       */
+/*   Updated: 2021/12/20 11:56:52 by leotran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 int	main(int argc, char **argv)
 {
-	int	fd = open("basic.txt", O_RDONLY);
+	//int	fd = open("basic.txt", O_RDONLY);
 	int	fd2 = open(argv[1], O_RDONLY);
 	
 	char	*line = NULL;

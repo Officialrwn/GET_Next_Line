@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leo <leo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: leotran <leotran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 08:59:13 by leo               #+#    #+#             */
-/*   Updated: 2021/12/19 12:59:38 by leo              ###   ########.fr       */
+/*   Updated: 2021/12/20 12:03:02 by leotran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	get_next_line(const int fd, char **line)
 			cpytostatic(fd, stat_str, buffer);
 		if (bytes_read == 0 && stat_str[fd] != NULL)
 			i = getlastline(fd, stat_str, line);
-		if (bytes_read == 0 && stat_str[fd] == NULL)
+		else if (bytes_read == 0 && stat_str[fd] == NULL)
 			i = 0;
 	}
 	ft_strdel(&buffer);
