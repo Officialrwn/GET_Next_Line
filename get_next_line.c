@@ -6,7 +6,7 @@
 /*   By: leotran <leotran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 08:59:13 by leo               #+#    #+#             */
-/*   Updated: 2021/12/20 15:35:24 by leotran          ###   ########.fr       */
+/*   Updated: 2021/12/20 16:22:34 by leotran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ static int	getlinefromstatic(int fd, char **stat_str, char **line)
 	*line = ft_strsub(stat_str[fd], 0, i);
 	temp = ft_strdup(ft_strchr(stat_str[fd], '\n') + 1);
 	ft_strdel(&stat_str[fd]);
-	stat_str[fd] = ft_strdup(temp);
-	ft_strdel(&temp);
+	stat_str[fd] = temp;
 	return (1);
 }
 
@@ -46,10 +45,9 @@ static int	cpytostatic(int fd, char **stat_str, char *buffer)
 
 	if (stat_str[fd] != NULL)
 	{
-		temp = ft_strdup(stat_str[fd]);
+		temp = ft_strjoin(stat_str[fd], buffer);
 		ft_strdel(&stat_str[fd]);
-		stat_str[fd] = ft_strjoin(temp, buffer);
-		ft_strdel(&temp);
+		stat_str[fd] = temp;
 	}
 	else
 		stat_str[fd] = ft_strdup(buffer);

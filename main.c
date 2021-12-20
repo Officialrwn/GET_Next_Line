@@ -6,7 +6,7 @@
 /*   By: leotran <leotran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 20:02:42 by marvin            #+#    #+#             */
-/*   Updated: 2021/12/20 15:45:04 by leotran          ###   ########.fr       */
+/*   Updated: 2021/12/20 16:26:55 by leotran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 int	main(int argc, char **argv)
 {
-	int	fd = open("basic.txt", O_RDONLY);
-	//int	fd = open(argv[1], O_RDONLY);
+	//int	fd = open("basic.txt", O_RDONLY);
+	int	fd = open(argv[1], O_RDONLY);
 	//int	fd = 42;
 
 	char	*line = NULL;
@@ -29,6 +29,6 @@ int	main(int argc, char **argv)
 		printf("%d: %s\n", i, line);
 		ft_strdel(&line);
 	}
-	system("leaks a.out");
+	//system("leaks a.out");
 	return (0);
 }
