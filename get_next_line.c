@@ -6,7 +6,7 @@
 /*   By: leotran <leotran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 08:59:13 by leo               #+#    #+#             */
-/*   Updated: 2021/12/20 12:03:02 by leotran          ###   ########.fr       */
+/*   Updated: 2021/12/20 14:17:19 by leotran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int	get_next_line(const int fd, char **line)
 	static char	*stat_str[FD_SIZE];
 	char		*buffer;
 	int			i;
-	int			bytes_read;
 
 	i = 2;
 	buffer = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1));
@@ -69,17 +68,15 @@ int	get_next_line(const int fd, char **line)
 	while (i > 0)
 	{
 		if (stat_str[fd] != NULL && ft_strchr(stat_str[fd], '\n') != NULL)
-			i = getlinefromstatic(fd, stat_str, line);
-		if (i == 1)
-			break ;
-		bytes_read = read(fd, buffer, BUFF_SIZE);
-		if (bytes_read >= 0)
-			buffer[bytes_read] = '\0';
-		if (bytes_read > 0)
+			return (getlinefromstatic(fd, stat_str, line));
+		i = read(fd, buffer, BUFF_SIZE);
+		if (i >= 0)
+			buffer[i] = '\0';
+		if (i > 0)
 			cpytostatic(fd, stat_str, buffer);
-		if (bytes_read == 0 && stat_str[fd] != NULL)
-			i = getlastline(fd, stat_str, line);
-		else if (bytes_read == 0 && stat_str[fd] == NULL)
+		if (i == 0 && stat_str[fd] != NULL)
+			return (getlastline(fd, stat_str, line));
+		else if (i == 0 && stat_str[fd] == NULL)
 			i = 0;
 	}
 	ft_strdel(&buffer);

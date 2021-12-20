@@ -1,33 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_count_c.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leotran <leotran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/29 20:02:42 by marvin            #+#    #+#             */
-/*   Updated: 2021/12/20 14:17:57 by leotran          ###   ########.fr       */
+/*   Created: 2021/12/20 14:25:38 by leotran           #+#    #+#             */
+/*   Updated: 2021/12/20 14:27:05 by leotran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-#include <stdio.h>
-#include <fcntl.h>
-
-int	main(int argc, char **argv)
+int	ft_count_c(char *str, int c)
 {
-	//int	fd = open("basic.txt", O_RDONLY);
-	int	fd = open(argv[1], O_RDONLY);
-	//int	fd = 42;
+	int i = 0;
 
-	char	*line = NULL;
-	int i = 1;
-	
-	while (i > 0)
-	{
-		i = get_next_line(fd, &line);
-		printf("%d: %s\n", i, line);
-		ft_strdel(&line);
-	}
-	return (0);
+	while (str[i] != '\0' && str[i] != c)
+		i++;
+	return (i);
 }

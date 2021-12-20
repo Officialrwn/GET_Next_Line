@@ -6,7 +6,7 @@
 /*   By: leotran <leotran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 09:13:31 by leotran           #+#    #+#             */
-/*   Updated: 2021/12/15 11:57:43 by leotran          ###   ########.fr       */
+/*   Updated: 2021/12/20 14:27:33 by leotran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,5 @@ void	ft_dlstaddend(t_dlist **alst, t_dlist *new);
 void	ft_dlstaddfront(t_dlist **alst, t_dlist *new);
 int		ft_countstrings(const char *s, char c);
 char	*ft_strccpy(char *src, int c);
-
+int		ft_count_c(char *str, int c);
 #endif
