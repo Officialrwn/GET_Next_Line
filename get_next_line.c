@@ -6,7 +6,7 @@
 /*   By: leotran <leotran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 08:59:13 by leo               #+#    #+#             */
-/*   Updated: 2021/12/20 14:17:19 by leotran          ###   ########.fr       */
+/*   Updated: 2021/12/20 15:35:24 by leotran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	getlastline(int fd, char **stat_str, char **line)
 	return (i);
 }
 
-static void	cpytostatic(int fd, char **stat_str, char *buffer)
+static int	cpytostatic(int fd, char **stat_str, char *buffer)
 {
 	char	*temp;
 
@@ -53,6 +53,7 @@ static void	cpytostatic(int fd, char **stat_str, char *buffer)
 	}
 	else
 		stat_str[fd] = ft_strdup(buffer);
+	return (2);
 }
 
 int	get_next_line(const int fd, char **line)
@@ -68,16 +69,16 @@ int	get_next_line(const int fd, char **line)
 	while (i > 0)
 	{
 		if (stat_str[fd] != NULL && ft_strchr(stat_str[fd], '\n') != NULL)
-			return (getlinefromstatic(fd, stat_str, line));
+			i = (getlinefromstatic(fd, stat_str, line));
+		if (i == 1)
+			break ;
 		i = read(fd, buffer, BUFF_SIZE);
 		if (i >= 0)
 			buffer[i] = '\0';
 		if (i > 0)
-			cpytostatic(fd, stat_str, buffer);
+			i = cpytostatic(fd, stat_str, buffer);
 		if (i == 0 && stat_str[fd] != NULL)
-			return (getlastline(fd, stat_str, line));
-		else if (i == 0 && stat_str[fd] == NULL)
-			i = 0;
+			i = (getlastline(fd, stat_str, line));
 	}
 	ft_strdel(&buffer);
 	return (i);
